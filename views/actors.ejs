@@ -1,4 +1,4 @@
-<% include ./partials/header.ejs %>
+<% include partials/header.ejs %>
 <header>Search the Sakila database for actor information</header>
 <div class="container">
 	<div id="search-container">
@@ -12,6 +12,17 @@
 					<p>Night at the musuem, Go Home, Finding Nemo, Getting the job done</p>
 				</div>			
 			</div> -->
+			<% if(typeof(actors) != "undefined"){ %>
+				<% for(var i = 0; i < actors.length) %>
+					<!-- <div class="actor">
+						<img src="actor_photo.png" />
+						<div class="actor-details">
+							<h2><%= actors[i].firstName + ' ' + actors[i].lastName %></h2>
+							<p>Night at the musuem, Go Home, Finding Nemo, Getting the job done</p>
+						</div>			
+					</div> -->
+				<% } %>
+			<% } %>
 		</div>
 		<div class="pagination">
 			<ul id="pagination-ul"></ul>
@@ -19,5 +30,4 @@
 	
 	</div>
 </div>
-<script type="text/javascript" src="sakila-search.js"></script>
-<% include ./partials/footer.ejs %>
+<% include partials/footer.ejs %>

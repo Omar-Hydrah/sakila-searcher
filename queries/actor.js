@@ -15,8 +15,10 @@ function queryPromise(query, values){
 actor.fetchActors = function(firstName, lastName, offset, callback){
 
 	// statement: "select * from actor where first_name like a% and last_name like b% limit 5 offset 5"
-	var actorsQuery = "select concat(first_name, ' ',last_name) as name from actor where first_name like ? ";
-	actorsQuery += "and last_name like ? limit 5 offset ?";
+	// var actorsQuery = "select concat(first_name, ' ',last_name) as name from actor where first_name like ? ";
+	// actorsQuery     += "and last_name like ? limit 5 offset ?";
+	// Edited query to match sakila-search.js (front-end)
+	var actorsQuery = "select * from actor where first_name like ? and last_name like ? limit 5 offset ? ";
 
 	// How many actors where found. Used in pagination.
 	var countQuery = "select count(*) as count from actor where first_name like ? and last_name like ?";
@@ -37,7 +39,7 @@ actor.fetchActors = function(firstName, lastName, offset, callback){
 		// console.log(results);
 		for(var i = 0; i < results.length; i++){
 			// console.log(results[i].name);
-			actors.push(results[i].name);
+			actors.push({"firstName": results[i].first_name, "lastName": results[i].last_name});
 		}
 		// return actors.push(count);
 		// console.log(actors);

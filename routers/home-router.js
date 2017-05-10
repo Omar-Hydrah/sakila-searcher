@@ -6,6 +6,10 @@ router.get("/", function(req, res){
 	res.render("index");
 });
 
+router.get("/find-actor", function(req, res){
+	console.log("Special route");
+});
+
 router.get("/find-actor/:actorName/:offset", function(req, res){
 
 	/*
@@ -28,7 +32,7 @@ router.get("/find-actor/:actorName/:offset", function(req, res){
 	}else{
 		res.end("Browser Request");
 	}*/
-
+	console.log(req.params);
 	var actorName = req.params.actorName;
 
 	// var offset = (req.params.offset.match(/^\d+$/).index != -1 ) ? parseInt(req.params.offset) : 0 ;

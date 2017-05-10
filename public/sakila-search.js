@@ -14,19 +14,27 @@ var actorName; // The searched keyword to find the actor
 function sendSearchRequest(passedActorName){
 	$.ajax({
 		type: "GET",
-		url : "find-actor",
-		data : {actorName : passedActorName, offset: offset},
+		// url : "/find-actor/",
+		// Changed structure, to be handled in express route.
+		url: "/find-actor/" + passedActorName + "/" + offset,
+		// data : {actorName : passedActorName, offset: offset},
+		// data : JSON.stringify({actorName : passedActorName, offset: offset}),
 		beforeRequest: function(request){
 			// To change request headers.
 			request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		},
 		success : function(data){
-			var actors = JSON.parse(data);
+			// var actors = JSON.parse(data);
+			// console.log(data);
+			var actors = data;
 
 			// The count of all availabe actors by the searched word, 
 			// is stored as the last index inside the array.
 			var actorsCount = actors.pop();
-			pagesCount = Math.ceil(actorsCount.count / 5);
+			// Changed actorsCount, because of change in server.
+			// pagesCount = Math.ceil(actorsCount.count / 5);
+			pagesCount = Math.ceil(actorsCount / 5);
+			console.log(pagesCount);
 			// console.log(currentPage);
 			displayActors(actors);
 			createButtons(pagesCount);
@@ -64,7 +72,9 @@ function displayActors(actorsArray){
 		container.className = "actor";
 		image.src = "actor_photo.png";
 		details.className = "actor-details";
-		name.innerHTML    = actorsArray[i]["first_name"] + " " + actorsArray[i]["last_name"];
+		// name.innerHTML    = actorsArray[i]["first_name"] + " " + actorsArray[i]["last_name"];
+		// Updated, because of changes in the back-end. Back-end returns an actor object{firstName, lastName}
+		name.innerHTML    = actorsArray[i].firstName + " " + actorsArray[i].lastName;
 		movies.innerHTML  = "This actor has no movies yet.";
 
 		details.appendChild(name);
