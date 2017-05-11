@@ -6,10 +6,6 @@ router.get("/", function(req, res){
 	res.render("index");
 });
 
-router.get("/find-actor", function(req, res){
-	console.log("Special route");
-});
-
 router.get("/find-actor/:actorName/:offset", function(req, res){
 
 	/*
@@ -32,11 +28,15 @@ router.get("/find-actor/:actorName/:offset", function(req, res){
 	}else{
 		res.end("Browser Request");
 	}*/
-	console.log(req.params);
+
+	// Response will be different based on request.
+	var isAjaxRequest = (req.headers["x-requested-with"] == "XMLHttpRequest");
+
+	// console.log(req.params);
 	var actorName = req.params.actorName;
 
 	// var offset = (req.params.offset.match(/^\d+$/).index != -1 ) ? parseInt(req.params.offset) : 0 ;
-	// Making sure that an int is being passed.
+	// Making sure that an integer is being passed.
 	var offset = isNaN(req.params.offset) ? 0 : parseInt(req.params.offset);
 
 
@@ -59,8 +59,17 @@ router.get("/find-actor/:actorName/:offset", function(req, res){
 
 		// Making sure that the actors is an array, and count is a number.
 		if(Array.isArray(actors) && !isNaN(count)){
-			actors.push(count);
-			res.json(actors);
+			var ajaxResponse = actors;
+			ajaxResponse.push(count);
+
+			var htmlResponse = {
+				actors: actors,
+				count: count,
+				offset: offset
+			};
+
+			isAjaxRequest ? res.json(ajaxResponse) : res.render("actors", htmlResponse);
+
 			// res.end(actors);
 		}else{
 			res.json("{'error': 'Error occurred'}");

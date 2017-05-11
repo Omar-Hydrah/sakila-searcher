@@ -28,6 +28,27 @@ input[type=text]:focus{box-shadow:0 0 20px #fff;}
 .pagination a{font-family:sans-serif;}
 .pagination a.selected{background-color: #7d7d7d; color:#fff; display:block; border-radius:6px; }
 
+/*---------------------*/
+/* -- Search Button -- */
+/*---------------------*/
+/* Used for non-ajax requests */
+#search-button{
+	position:absolute;
+	bottom:5%;
+	right:5%;
+	font-size:18px;
+	padding:8px;
+	background-color: skyblue;
+	color:white;
+	border:none;
+	border-radius:2px;
+}
+
+#search-button:hover{
+	cursor:pointer;
+}
+
+
 @media all and (max-width:800px){
 #search-container{width:80%;}
 }
